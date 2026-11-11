@@ -1,0 +1,185 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  - destroy
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # aws_s3_bucket.landlord_media[1] must be replaced
+-/+ resource "aws_s3_bucket" "landlord_media" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      ~ bucket                      = "haven-media-la-002" -> "haven-media-la-003" # forces replacement
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      ~ id                          = "haven-media-la-002" -> (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      ~ tags                        = {
+          ~ "landlord_account_id" = "la-002" -> "la-003"
+        }
+      ~ tags_all                    = {
+          ~ "landlord_account_id" = "la-002" -> "la-003"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      ~ cors_rule (known after apply)
+
+      ~ grant (known after apply)
+
+      ~ lifecycle_rule (known after apply)
+
+      ~ logging (known after apply)
+
+      ~ object_lock_configuration (known after apply)
+
+      ~ replication_configuration (known after apply)
+
+      ~ server_side_encryption_configuration (known after apply)
+
+      ~ versioning (known after apply)
+
+      ~ website (known after apply)
+    }
+
+  # aws_s3_bucket.landlord_media[2] must be replaced
+-/+ resource "aws_s3_bucket" "landlord_media" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      ~ bucket                      = "haven-media-la-003" -> "haven-media-la-004" # forces replacement
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      ~ id                          = "haven-media-la-003" -> (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      ~ tags                        = {
+          ~ "landlord_account_id" = "la-003" -> "la-004"
+        }
+      ~ tags_all                    = {
+          ~ "landlord_account_id" = "la-003" -> "la-004"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      ~ cors_rule (known after apply)
+
+      ~ grant (known after apply)
+
+      ~ lifecycle_rule (known after apply)
+
+      ~ logging (known after apply)
+
+      ~ object_lock_configuration (known after apply)
+
+      ~ replication_configuration (known after apply)
+
+      ~ server_side_encryption_configuration (known after apply)
+
+      ~ versioning (known after apply)
+
+      ~ website (known after apply)
+    }
+
+  # aws_s3_bucket.landlord_media[3] will be destroyed
+  # (because index [3] is out of range for count)
+  - resource "aws_s3_bucket" "landlord_media" {
+      - bucket   = "haven-media-la-004" -> null
+      - id       = "haven-media-la-004" -> null
+      - tags     = {
+          - "landlord_account_id" = "la-004"
+        } -> null
+      - tags_all = {
+          - "landlord_account_id" = "la-004"
+        } -> null
+    }
+
+  # aws_s3_bucket.listing_media will be created
+  + resource "aws_s3_bucket" "listing_media" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "haven-listing-media"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket_lifecycle_configuration.listing_media_archive will be created
+  + resource "aws_s3_bucket_lifecycle_configuration" "listing_media_archive" {
+      + bucket                                 = (known after apply)
+      + expected_bucket_owner                  = (known after apply)
+      + id                                     = (known after apply)
+      + transition_default_minimum_object_size = "all_storage_classes_128K"
+
+      + rule {
+          + id     = "archive-sold-listing-photos"
+          + status = "Enabled"
+            # (1 unchanged attribute hidden)
+
+          + transition {
+              + days          = 30
+              + storage_class = "GLACIER"
+            }
+        }
+    }
+
+Plan: 4 to add, 0 to change, 3 to destroy.
+
+Warning: Invalid Attribute Combination
+
+  with aws_s3_bucket_lifecycle_configuration.listing_media_archive,
+  on lifecycle.tf line 18, in resource "aws_s3_bucket_lifecycle_configuration" "listing_media_archive":
+  18:   rule {
+
+No attribute specified when one (and only one) of
+[rule[0].filter,rule[0].prefix] is required
+
+This will be an error in a future version of the provider
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

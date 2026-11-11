@@ -1,0 +1,10 @@
+Python 3.14.6
+Terraform v1.16.6
+on windows_amd64
+
+Your version of Terraform is out of date! The latest version
+is 1.17.1. You can update by downloading from https://developer.hashicorp.com/terraform/install
+
+[notice] A new release of pip is available: 26.1.2 -> 26.3
+[notice] To update, run: F:\Ajackus_Assignment\haven-infra-assessment\.venv\Scripts\python.exe -m pip install --upgrade pip
+pytest 9.2.0
