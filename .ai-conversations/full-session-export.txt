@@ -1,0 +1,1735 @@
+
+> hey so we have to complete this assignment and please through this
+  Assignment Link:  https://docs.google.com/document/d/1g634OzEMIbezCB16yEUWN_x
+  VcSPnXXFwUPeIkD6hII0/edit?tab=t.0
+
+  Important Instructions
+
+  Review the assignment requirements carefully before beginning.
+
+  Screen recording is mandatory. Please use an external screen-recording tool
+  to record your screen throughout the assignment-solving process.
+
+  Ensure that the recording captures your work clearly.
+
+  Follow the assignment-specific instructions regarding the permitted use of
+  tools and external resources.
+
+  Ensure your solution and screen recording are complete and accessible before
+  submission.
+
+  Submission Guidelines
+  Once you have completed the assignment, please share your solution and screen
+  recording by replying to the email through which the assignment was shared.
+
+  If you encounter any technical difficulties, please contact us immediately.
+
+  We appreciate your time and effort and look forward to reviewing your
+  submissions.
+
+  Regards,
+  Tacnique
+
+  we have to do this today understand the requirement and let's do it  and
+  which tool we can use to screen recording
+
+● I'll fetch the assignment doc first.
+
+● Fetch(https://docs.google.com/document/d/1g634OzEMIbezCB16yEUWN_xVcSPnXXFwUPeI
+       kD6hII0/export?format=txt)
+  ⎿  Received 1KB (307 Temporary Redirect)
+
+● Fetch(https://doc-0k-8g-docstext.googleusercontent.com/export/dr04igesal9pftlk
+       9arelf1tq8/7ho1iaqe79c4cjd10r709ll5gc/1794379045000/115921203395334697098
+       /*/1g634OzEMIbezCB16yEUWN_xVcSPnXXFwUPeIkD6hII0?format=txt)
+  ⎿  Received 3.2KB (200 OK)
+
+● I need the exact details (starter repo URL, numbers). Fetching again for
+  specifics.
+
+● Fetch(https://doc-0k-8g-docstext.googleusercontent.com/export/dr04igesal9pftlk
+       9arelf1tq8/7ho1iaqe79c4cjd10r709ll5gc/1794379045000/115921203395334697098
+       /*/1g634OzEMIbezCB16yEUWN_xVcSPnXXFwUPeIkD6hII0?format=txt)
+  ⎿  Received 3.2KB (200 OK)
+
+● I've read the assignment. Before we touch the starter repo, one thing matters:
+  the recording has to be a single unedited take, starting from when you open
+  the repo. So you should start recording first, and only then should we clone
+  and start working. Here's the plan so you're ready.
+
+  What the assignment asks
+
+  Sr. Cloud Engineer (AWS) take-home, about 90–100 min. AI use is allowed and
+  expected. Starter repo: https://github.com/ajackus/haven-infra-assessment
+  (Terraform 1.7+, Python 3.10+, no AWS account needed).
+
+  Task: B0 B0.md
+  What to deliver: One S3 bucket per landlord using count. A landlord in the
+    middle of the list gets removed. What does plan show, why is it dangerous,
+    what's the fix? (Index shift means every later bucket gets destroyed and
+    recreated. Fix: for_each keyed by account ID plus moved blocks.)
+  ────────────────────────────────────────
+  Task: B1 B1.md
+  What to deliver: Photos move to Glacier on day 30 and get deleted on day 40.
+    What does that actually cost? (Glacier's minimum storage duration means you
+    pay a pro-rated early-delete charge for the remaining days. Redesign the
+    lifecycle so it doesn't do that.)
+  ────────────────────────────────────────
+  Task: B2 code + tests
+  What to deliver: (1) Access check: a Property Manager can see screening
+  reports
+    only for tenants under their own landlord account. Tests must show
+    cross-account denied and same-account allowed. (2) Cost-tag check that fails
+
+    when landlord_account_id is missing (not tenant_id). It must be idempotent,
+    and DESIGN_NOTES.md must name the exact idempotency key.
+
+  Other files: TERMINAL_LOG.md (setup output, both test runs, the tag check run
+  twice), DESIGN_NOTES.md, .ai-conversations/ (your real prompts and AI output,
+  including at least one AI mistake you caught), and README.md with the
+  recording link. Don't modify the seed data, don't squash commits, and submit
+  the repo URL.
+
+  On camera: before writing any B2 code, you have to say out loud what the
+  README taught you that changes the design. We'll read the README together on
+  screen and I'll point out what matters, but you need to say it in your own
+  words.
+
+  Screen recording tool
+
+  - OBS Studio (free, obsproject.com). This is what I'd use. It records long
+    sessions reliably, captures your mic for narration, and doesn't add a
+    watermark. Pick "Display Capture" and add your mic, then record to MP4.
+  - Alternatives: Loom (easy to share a link, but the free plan caps recordings
+    at 5 minutes, so don't use it here) or ShareX (free, lighter).
+  - The built-in Xbox Game Bar (Win+G) records only one window, so you'd lose
+    the terminal and browser switches. Avoid it.
+
+  After recording, upload to Google Drive or YouTube (unlisted) and put the link
+  in README.md.
+
+  Before you hit record
+
+  1. Have a GitHub account ready, plus an empty repo or permission to push a
+     fork.
+  2. Keep the VS Code terminal visible the whole time. It's a requirement.
+  3. Since .ai-conversations/ needs your real prompts, keep this chat. We'll
+     export the relevant parts.
+
+  I'll quickly check that Terraform, Python and git are installed (this doesn't
+  touch the repo):
+
+● PowerShell(terraform -version; python --version; git --version; gh --version)
+  ⎿  Terraform v1.16.6
+     on windows_amd64
+     … +7 lines (ctrl+o to expand)
+
+● You already have everything installed: Terraform 1.16, Python 3.14, git and
+  the GitHub CLI.
+
+  Next step: install OBS, start recording with your mic on, and reply "recording
+  started". I'll then clone the repo into f:\Ajackus_Assignment, run setup, and
+  we'll read the README together on screen. After that we'll do B0 and B1, then
+  build B2, committing as we go so there's a real commit history.
+
+> how to record in obs studio
+
+● Here's how to set up OBS on Windows. It takes about 5 minutes.
+
+  1. Install
+
+  Download it from obsproject.com, choose Windows, and install. On first launch
+  the Auto-Configuration Wizard opens. Pick "Optimize for recording" and accept
+  the defaults.
+
+  2. Add your screen
+
+  1. At the bottom, in the Sources box, click + and choose Display Capture, then
+     OK.
+  2. Pick your monitor and click OK. Your desktop should now show in the
+     preview.
+     - If the preview is black (common on HP laptops with two GPUs), remove that
+       source and add Window Capture instead. Or go to Windows Settings →
+       Display → Graphics, add obs64.exe, and set it to Power saving. Then
+       restart OBS.
+
+  3. Turn on your mic (you have to narrate)
+
+  - Look at the Audio Mixer panel and find Mic/Aux. Talk and check that the
+    green bar moves.
+  - If Mic/Aux isn't there: go to Settings → Audio → Mic/Auxiliary Audio and
+    choose your microphone.
+  - If you don't want system sounds recorded, mute Desktop Audio (speaker icon).
+
+  4. Recording settings
+
+  Settings → Output → Recording:
+  - Recording Path: a folder with plenty of space, for example F:\Recordings
+  - Recording Format: MP4, or MKV to be safe (if OBS crashes, MKV doesn't get
+    corrupted; you can convert it with File → Remux Recordings)
+  - Settings → Video: Output resolution 1280x720 and FPS 30. That keeps a 2-hour
+    file small enough to upload.
+
+  5. Record
+
+  - Click Start Recording (bottom right). A red dot and timer appear at the
+    bottom.
+  - Do not pause or stop until we're completely done. The recording must be one
+    continuous take.
+  - At the end, click Stop Recording. The file is saved in your Recording Path.
+
+  Quick test first
+
+  Record 10 seconds, stop, and play the file back. Check that the screen text is
+  readable and your voice is audible. Then delete the test file and start the
+  real recording.
+
+  After recording
+
+  Upload the file to Google Drive and set sharing to "Anyone with the link can
+  view", or to YouTube as Unlisted. Paste that link into README.md.
+
+  When you've started the real recording, reply "recording started" and I'll
+  clone the repo.
+
+> can you setup all these
+
+● Yes. I'll install OBS with winget and pre-write its config files, so it opens
+  ready to record.
+
+● PowerShell(winget --version; Test-Path "$env:APPDATA\obs-studio"; Test-Path
+            "C:\Program Files\obs-studio\bin\64bit\obs64.exe")
+  ⎿  v1.29.380
+     True
+     True
+  ⎿  Interrupted · What should Claude do instead?
+
+> obs is installed just do the setup
+
+● PowerShell($o="$env:APPDATA\obs-studio"; Get-Process obs64 -ErrorAction
+            SilentlyContinue | Select Id; Get-ChildItem -Recurse $o -Include
+            *.ini,*.json -Depth 3 | Where-Obje…)
+  ⎿     Id
+        --
+     26408
+
+● OBS is running. I'll check the config layout.
+
+● PowerShell($o="$env:APPDATA\obs-studio"; Get-ChildItem $o; Get-ChildItem
+            "$o\basic" -Recurse -ErrorAction SilentlyContinue | Select FullName;
+            Get-ChildItem $o -Filter *.in…)
+  ⎿      Directory: C:\Users\HP\AppData\Roaming\obs-studio
+
+     Mode                 LastWriteTime         Length Name
+     … +83 lines (ctrl+o to expand)
+
+● PowerShell($o="$env:APPDATA\obs-studio\basic"; Get-Content
+            "$o\profiles\Untitled\basic.ini"; "=== JSON"; Get-Content
+            "$o\scenes\Untitled.json" -Raw; "=== monitors"; Add-Ty…)
+  ⎿  [General]
+     Name=Untitled
+     … +294 lines (ctrl+o to expand)
+
+● OBS already has your default mic and desktop audio, but still needs a screen
+  source and the recording folder and output settings. I'll close it, edit its
+  config files, and reopen it. · summary
+
+● PowerShell(Stop-Process -Name obs64 -Force; Start-Sleep 2; New-Item -ItemType
+            Directory -Force F:\Recordings | Out-Null
+            $b="$env:APPDATA\obs-studio\basic"…)
+  ⎿  ok
+
+     C:\Users\HP\AppData\Roaming\obs-studio\basic\profiles\Untitled\basic.i
+     … +16 lines (ctrl+o to expand)
+
+● The config is updated. Relaunching OBS:
+
+● PowerShell(Start-Process "C:\Program Files\obs-studio\bin\64bit\obs64.exe"
+            -WorkingDirectory "C:\Program Files\obs-studio\bin\64bit";
+            Start-Sleep 6; Get-Process obs64 | Se…)
+  ⎿    Id
+       --
+     8372
+     … +4 lines (ctrl+o to expand)
+
+● OBS is set up and running. The log shows the Display Capture source loaded and
+  the output set to 1280x720 with no errors.
+
+  What's configured:
+  - Screen: captures your whole monitor, including the mouse cursor.
+  - Mic: Mic/Aux uses your default Windows microphone. Desktop Audio is on too.
+  - Output: 1280x720 at 30 fps and about 2.5 Mbps, so roughly 1.1 GB per hour
+    (small enough to upload).
+  - Format: Hybrid MP4, which stays playable even if OBS crashes.
+  - Saved to: F:\Recordings
+
+  I backed up your original files as .mybak in %APPDATA%\obs-studio\basic\.
+
+  Check these in the OBS window:
+  1. The preview shows your desktop. If it's black, tell me and I'll switch it
+     to Window Capture.
+  2. Talk, and the Mic/Aux green bar in the Audio Mixer should move.
+  3. Do a 10-second test recording (Start Recording, then Stop) and play the
+     file from F:\Recordings.
+
+  Once the test looks right, start the real recording and reply "recording
+  started". From then on, keep it running without pausing until we're done.
+
+> i can see black screen
+● Black Display Capture is a common problem on laptops with two GPUs. I'll
+  switch the capture method to Windows Graphics Capture, which avoids it, and
+  check which GPUs you have.
+
+● PowerShell(Get-CimInstance Win32_VideoController | Select Name;
+            $l=Get-ChildItem "$env:APPDATA\obs-studio\logs" | Sort LastWriteTime
+            | Select -Last 1; Select-String $l.Ful…)
+  ⎿  Name
+     ----
+     AMD Radeon (TM) R5 M330
+     … +17 lines (ctrl+o to expand)
+
+● OBS is rendering on the AMD GPU while the display runs on Intel, so it can't
+  see the screen. I'm pointing OBS at the Intel adapter and restarting it.
+  · summary
+
+● PowerShell(Stop-Process -Name obs64 -Force; Start-Sleep 2
+            $ip="$env:APPDATA\obs-studio\basic\profiles\Untitled\basic.ini"…)
+  ⎿  12:28:16.737: Loading up D3D11 on adapter Intel(R) UHD Graphics 620 (0
+     )
+     12:28:17.111: Failed to initialize module 'aja.dll'
+     … +10 lines (ctrl+o to expand)
+
+● OBS has restarted on the Intel UHD 620 GPU, which is the one driving your
+  screen, so the preview should show your desktop now. The "Failed to
+  initialize" lines in the log are just optional plugins for capture cards (AJA,
+  DeckLink, NVIDIA) that you don't have. They're harmless.
+
+  Check the OBS preview:
+  - If you see your desktop: do the 10-second test recording, play the file from
+    F:\Recordings, and check that the text is readable and your voice is
+    audible.
+  - If it's still black: tell me and I'll switch to a different capture method.
+
+  When the test works, start the real recording and reply "recording started".
+
+> done it is getting recorded now we can start
+
+● The recording is running, so let's start. First I'll clone the starter repo
+  and look at what's in it.
+
+● PowerShell(cd f:\Ajackus_Assignment; git clone
+            https://github.com/ajackus/haven-infra-assessment.git; cd
+            haven-infra-assessment; git log --oneline -n 20; Get-ChildItem -Re…)
+  ⎿  Cloning into 'haven-infra-assessment'...
+     d14c451 Haven platform infrastructure assessment
+     … +24 lines (ctrl+o to expand)
+
+● The files are small, so I'll read all of them, starting with the README as the
+  assignment says.
+
+● Bash(for f in README.md B0.md B1.md DESIGN_NOTES.md
+      .ai-conversations/README.md requirements.txt .gitignore app/models.py
+      app/seed_data.py app/access_control.py scri…)
+  ⎿  (No output)
+
+● Bash(for f in terraform/*.tf terraform/terraform.tfstate tests/conftest.py
+      tests/test_access_control.py tests/test_cost_tag_check.py; do echo "=====
+      $f"; cat "$f"; e…)
+  ⎿  (No output)
+
+● Per the README, I need to state the design implications before writing any B2
+  code: access to screening reports has to be checked at the landlord account
+  level by walking report → tenant → property → landlord account, failing closed
+  on any missing link. I'm running setup now while the seed data, models,
+  plan.json and tfstate stay untouched. · summary
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment; New-Item -ItemType
+            Directory -Force logs | Out-Null
+            & { python --version; terraform -version; python -m venv .v…)
+  ⎿  Python 3.14.6
+     Terraform v1.16.6
+     on windows_amd64
+     … +18 lines (ctrl+o to expand)
+  ⎿  (timeout 5m)
+
+● Setup worked. Next is B0: first a baseline plan, then the same plan with
+  la-002 removed from the middle of the list.
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment\terraform
+            "### Baseline (no change)"; terraform plan -refresh=false -no-color
+            -input=false *>&1 | Tee-Object ..\…)
+  ⎿  ### Baseline (no change)
+
+       # aws_s3_bucket.listing_media will be created
+     … +16 lines (ctrl+o to expand)
+  ⎿  (timeout 5m)
+
+● Removing la-002 made Terraform replace la-003 and la-004 and destroy the
+  index-3 bucket, so I'm switching the buckets to for_each keyed by account ID
+  with moved blocks to migrate the existing state instead. · summary
+
+  Read 1 file (ctrl+o to expand)
+
+● I'll commit the setup first so the history shows each step, then apply the
+  fix.
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment; git add
+            logs/01_setup.txt logs/02_tf_init.txt logs/03_b0_baseline.txt
+            logs/04_b0_count_remove.txt; git commit -…)
+  ⎿  Author identity unknown
+
+     *** Please tell me who you are.
+     … +12 lines (ctrl+o to expand)
+
+● Git has no author set. I'll set it for this repo only using your name and
+  email:
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment; git config
+            user.name "Sameer Khan"; git config user.email
+            "khannsameer1211@gmail.com"; git commit -q -m "B0: re…)
+  ⎿  9d469a1 B0: reproduce count-index cascade (la-002 removal replaces la-
+     003/la-004)
+     d14c451 Haven platform infrastructure assessment
+
+● Now the for_each fix with moved blocks:
+
+● Update(terraform\main.tf)
+  ⎿  Added 30 lines, removed 3 lines
+      16  # the refresh diffs your config directly against the seeded sta
+          te, which is what shows the real
+      17  # destroy/recreate cascade.
+      18  
+      19 +#                                                              
+      20 +# FIX: key each bucket by its landlord account ID (stable ident
+         +ity) instead of list position.                                 
+      21 +# Removing an account now plans exactly one destroy — that acco
+         +unt's bucket — and nothing else.                               
+      22 +                                                               
+      23  resource "aws_s3_bucket" "landlord_media" {
+      20 -  count  = length(var.landlord_accounts)                       
+      21 -  bucket = "haven-media-${var.landlord_accounts[count.index]}" 
+      24 +  for_each = toset(var.landlord_accounts)                      
+      25 +  bucket   = "haven-media-${each.key}"                         
+      26  
+      27    tags = {
+      24 -    landlord_account_id = var.landlord_accounts[count.index]   
+      28 +    landlord_account_id = each.key                             
+      29    }
+      30  }
+      31 +                                                               
+      32 +# One-time state migration from the old count indexes to the ne
+         +w for_each keys, so the                                        
+      33 +# switch itself doesn't destroy/recreate anything. Index -> ID 
+         +mapping comes from the seeded                                  
+      34 +# terraform.tfstate (provisioning order). Safe to delete once e
+         +very environment has applied it.                               
+      35 +moved {                                                        
+      36 +  from = aws_s3_bucket.landlord_media[0]                       
+      37 +  to   = aws_s3_bucket.landlord_media["la-001"]                
+      38 +}                                                              
+      39 +                                                               
+      40 +moved {                                                        
+      41 +  from = aws_s3_bucket.landlord_media[1]                       
+      42 +  to   = aws_s3_bucket.landlord_media["la-002"]                
+      43 +}                                                              
+      44 +                                                               
+      45 +moved {                                                        
+      46 +  from = aws_s3_bucket.landlord_media[2]                       
+      47 +  to   = aws_s3_bucket.landlord_media["la-003"]                
+      48 +}                                                              
+      49 +                                                               
+      50 +moved {                                                        
+      51 +  from = aws_s3_bucket.landlord_media[3]                       
+      52 +  to   = aws_s3_bucket.landlord_media["la-004"]                
+      53 +}                                                              
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment\terraform
+            "### for_each fix, la-002 still removed"; terraform plan
+            -refresh=false -no-color -input=false *>&1 |…)
+  ⎿  ### for_each fix, la-002 still removed
+
+       # aws_s3_bucket.landlord_media[0] has moved to aws_s3_bucket.landlor
+     … +17 lines (ctrl+o to expand)
+  ⎿  (timeout 5m)
+
+● The fix checks out: removing la-002 produces exactly one destroy, and the four
+  kept buckets show zero destroys, so the migration is safe. I'm writing B0.md
+  next. · summary
+
+● Write(B0.md)
+  ⎿  Added 81 lines, removed 1 line
+       3  What does `terraform plan` show when a middle landlord account 
+          is removed from the list? Why is
+       4  that dangerous here? What's the fix?
+       5  
+       6 -<!-- Your answer here -->                                      
+       6 +## What the plan shows                                         
+       7 +                                                               
+       8 +Reproduced against the seeded state (`terraform plan -refresh=f
+         +alse`, full output in                                          
+       9 +`logs/04_b0_count_remove.txt`) after removing `la-002` from `["
+         +la-001","la-002","la-003","la-004"]`:                          
+      10 +                                                               
+      11 +```                                                            
+      12 +# aws_s3_bucket.landlord_media[1] must be replaced             
+      13 +    ~ bucket = "haven-media-la-002" -> "haven-media-la-003" # f
+         +orces replacement                                              
+      14 +# aws_s3_bucket.landlord_media[2] must be replaced             
+      15 +    ~ bucket = "haven-media-la-003" -> "haven-media-la-004" # f
+         +orces replacement                                              
+      16 +# aws_s3_bucket.landlord_media[3] will be destroyed            
+      17 +    - bucket = "haven-media-la-004" -> null                    
+      18 +Plan: 4 to add, 0 to change, 3 to destroy.   (2 of the adds are
+         + the unrelated B1 listing_media resources)                     
+      19 +```                                                            
+      20 +                                                               
+      21 +Terraform tracks `count` instances by **list position**, not by
+         + which landlord they belong to.                                
+      22 +Removing index 1 shifts everyone after it down by one. `[1]` no
+         +w has to become la-003's bucket,                               
+      23 +and `[2]` has to become la-004's. Because the bucket name is im
+         +mutable, both are planned as                                   
+      24 +destroy and recreate, and `[3]` is destroyed outright. One inte
+         +nded deletion becomes **three                                  
+      25 +destroys and two recreates**.                                  
+      26 +                                                               
+      27 +## Why that's dangerous here                                   
+      28 +                                                               
+      29 +- **Collateral data loss.** These are per-landlord media bucket
+         +s. Offboarding la-002 would                                    
+      30 +  destroy la-003's and la-004's buckets, which are two *paying,
+         + unrelated* customers. In the                                  
+      31 +  default ordering Terraform plans the destroy first, so the da
+         +ta is gone before the replacement                              
+      32 +  exists. If a non-empty bucket blocks the destroy, the apply f
+         +ails partway through. If                                       
+      33 +  `force_destroy` is ever turned on, the objects are deleted wi
+         +th it.                                                         
+      34 +- **Name collisions and downtime.** The "new" `[1]` wants the n
+         +ame `haven-media-la-003`, which is                             
+      35 +  still held by the old `[2]` until that one is destroyed. S3 n
+         +ames are global and can take time                              
+      36 +  to free up, so the apply can fail halfway, leaving buckets mi
+         +ssing.                                                         
+      37 +- **The plan is easy to misread.** A reviewer expecting "remove
+         + la-002" sees `landlord_media[1]`,                             
+      38 +  `[2]` and `[3]` change. The index addresses hide *which landl
+         +ord* each line affects.                                        
+      39 +- **It hides on a normal plan.** As `main.tf` notes, a refreshi
+         +ng plan with dummy credentials                                 
+      40 +  quietly drops resources from state and shows plain creates in
+         +stead, so the cascade isn't                                    
+      41 +  visible unless you diff against state.                       
+      42 +- **Billing is wrong.** Recreated buckets get fresh resource ID
+         +s and lose their history                                       
+      43 +  (lifecycle state, replication, policies attached outside this
+         + module). Per-landlord cost                                    
+      44 +  attribution breaks for accounts that didn't change.          
+      45 +                                                               
+      46 +## The fix                                                     
+      47 +                                                               
+      48 +Key the resource by a **stable identity**, the landlord account
+         + ID, using `for_each`, and migrate                             
+      49 +existing state with `moved` blocks so the refactor itself doesn
+         +'t recreate anything                                           
+      50 +(see `terraform/main.tf`):                                     
+      51 +                                                               
+      52 +```hcl                                                         
+      53 +resource "aws_s3_bucket" "landlord_media" {                    
+      54 +  for_each = toset(var.landlord_accounts)                      
+      55 +  bucket   = "haven-media-${each.key}"                         
+      56 +  tags     = { landlord_account_id = each.key }                
+      57 +}                                                              
+      58 +                                                               
+      59 +moved {                                                        
+      60 +  from = aws_s3_bucket.landlord_media[0]                       
+      61 +  to   = aws_s3_bucket.landlord_media["la-001"]                
+      62 +}                                                              
+      63 +# ... [1] -> "la-002", [2] -> "la-003", [3] -> "la-004"        
+      64 +```                                                            
+      65 +                                                               
+      66 +Verified results:                                              
+      67 +                                                               
+      68 +| Scenario | Result | Log |                                    
+      69 +|---|---|---|                                                  
+      70 +| Fix applied, all 4 accounts present | 4 × `has moved`, **0 to
+         + destroy** (pure state migration) | `logs/06_b0_foreach_migrate
+         +.txt` |                                                        
+      71 +| Fix applied, `la-002` removed | 3 × `has moved`, **1 to destr
+         +oy: `landlord_media["la-002"]` only** | `logs/05_b0_foreach_rem
+         +ove.txt` |                                                     
+      72 +                                                               
+      73 +Rollout notes:                                                 
+      74 +- Ship the `for_each` change and `moved` blocks **as their own 
+         +change, with no account removed**,                             
+      75 +  and confirm the plan shows 0 to destroy. Remove `la-002` in a
+         + later, separate PR. Keep the                                  
+      76 +  `moved` blocks until every workspace or environment has appli
+         +ed them. They're harmless to leave.                            
+      77 +- The index-to-ID mapping in the `moved` blocks must match the 
+         +order in the *actual state*.                                   
+      78 +  Verify it with `terraform state list` and `terraform state sh
+         +ow` per environment rather than                                
+      79 +  trusting the variable's current order.                       
+      80 +- If the order isn't known for some environment, use `terraform
+         + state mv` there as a one-off.                                 
+      81 +- Guardrails worth adding: `lifecycle { prevent_destroy = true 
+         +}` on customer-data buckets (an                                
+      82 +  intentional offboarding removes it in the same reviewed PR), 
+         +and a CI policy check that fails                               
+      83 +  any plan containing `delete` on `aws_s3_bucket` unless it's e
+         +xplicitly approved.                                            
+      84 +- Going further, `var.landlord_accounts` could become a `set(st
+         +ring)` or a `map(object)` keyed by                             
+      85 +  ID. A `map(object)` also leaves room for per-account settings
+         + without going back to positional                              
+      86 +  lists.                                                       
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment; git status
+            --short; git add B0.md terraform/main.tf
+            logs/05_b0_foreach_remove.txt logs/06_b0_foreach_migrate.tx…)
+  ⎿   M B0.md
+      M terraform/main.tf
+     ?? logs/05_b0_foreach_remove.txt
+     … +5 lines (ctrl+o to expand)
+● B0 is committed, and I'm now fixing B1 (Glacier): the 90-day minimum on
+  Flexible Retrieval means early deletion would still bill the remaining days,
+  and the lifecycle rule has no filter, so it archives every photo. I'll correct
+  the Terraform and write it up. · summary
+
+  Read 1 file (ctrl+o to expand)
+
+> good from moving count to for_each in this was it won't remove anyone if
+  something is removed from middle
+
+● The for_each switch cut the plan from 3 destroys to 1, since each bucket is
+  tied to its ID and removing la-002 no longer shifts la-003 and la-004. I'm
+  continuing with B1 next. · summary
+
+● Update(terraform\lifecycle.tf)
+  ⎿  Added 59 lines, removed 1 line
+      12    bucket = "haven-listing-media"
+      13  }
+      14  
+      15 +# REDESIGN (see B1.md):                                        
+      16 +#   - The original rule had no filter, so it archived EVERY pho
+         +to, including active listings,                                 
+      17 +#     not just sold ones.                                      
+      18 +#   - GLACIER (Flexible Retrieval) has a 90-day minimum storage
+         + duration. An object deleted on                                
+      19 +#     day 40 (10 days after archival) is still billed for the r
+         +emaining 80 days.                                              
+      20 +#   - Sold-listing photos are exactly the population most likel
+         +y to get a deletion request soon                               
+      21 +#     after sale, so they go to INTELLIGENT_TIERING instead. It
+         + has no minimum storage duration,                              
+      22 +#     no early-delete fee and no retrieval fee, and it still st
+         +eps cold objects down to                                       
+      23 +#     Infrequent Access (30d) and Archive Instant Access (90d) 
+         +on its own.                                                    
+      24 +#   - Only objects that survive well past the deletion-request 
+         +window go to a true Glacier                                    
+      25 +#     class, so the 90-day minimum is rarely triggered by a del
+         +etion.                                                         
+      26 +#   - Objects under 128 KB are excluded. They're never auto-tie
+         +red in Intelligent-Tiering, and in                             
+      27 +#     Glacier the ~40 KB per-object overhead plus per-object tr
+         +ansition fees outweigh the savings.                            
+      28 +#                                                              
+      29 +# Requires the app to tag photos `listing_status = sold` when a
+         + listing sells (PutObjectTagging).                             
+      30 +# Lifecycle `days` count from object creation (upload), not fro
+         +m when the tag was applied.                                    
+      31 +                                                               
+      32 +locals {                                                       
+      33 +  sold_photo_min_bytes = 131072 # 128 KB                       
+      34 +}                                                              
+      35 +                                                               
+      36  resource "aws_s3_bucket_lifecycle_configuration" "listing_media
+          _archive" {
+      37    bucket = aws_s3_bucket.listing_media.id
+      38  
+      39    rule {
+      19 -    id     = "archive-sold-listing-photos"                     
+      40 +    id     = "tier-sold-listing-photos"                        
+      41      status = "Enabled"
+      42  
+      43 +    filter {                                                   
+      44 +      and {                                                    
+      45 +        object_size_greater_than = local.sold_photo_min_bytes  
+      46 +        tags = {                                               
+      47 +          listing_status = "sold"                              
+      48 +        }                                                      
+      49 +      }                                                        
+      50 +    }                                                          
+      51 +                                                               
+      52 +    # 30 days after upload, same point as the original Glacier 
+         +transition, but into a class                                   
+      53 +    # with no minimum duration, so an early deletion costs noth
+         +ing extra.                                                     
+      54      transition {
+      55        days          = 30
+      56 +      storage_class = "INTELLIGENT_TIERING"                    
+      57 +    }                                                          
+      58 +                                                               
+      59 +    # Deep, cheap archive only once deletion requests have most
+         +ly stopped. Tune this from real                                
+      60 +    # deletion-request data (the 90-day minimum then mostly ove
+         +rlaps time the object would have                               
+      61 +    # stayed anyway).                                          
+      62 +    transition {                                               
+      63 +      days          = 180                                      
+      64        storage_class = "GLACIER"
+      65      }
+      66    }
+      67 +                                                               
+      68 +  # If versioning is ever enabled, a "delete" only adds a delet
+         +e marker and the archived bytes                                
+      69 +  # keep billing as a noncurrent version. That breaks both the 
+         +budget and the 30-day deletion                                 
+      70 +  # requirement. Purge noncurrent versions promptly.           
+      71 +  rule {                                                       
+      72 +    id     = "purge-noncurrent-versions"                       
+      73 +    status = "Enabled"                                         
+      74 +                                                               
+      75 +    filter {}                                                  
+      76 +                                                               
+      77 +    noncurrent_version_expiration {                            
+      78 +      noncurrent_days = 1                                      
+      79 +    }                                                          
+      80 +                                                               
+      81 +    abort_incomplete_multipart_upload {                        
+      82 +      days_after_initiation = 7                                
+      83 +    }                                                          
+      84 +  }                                                            
+      85  }
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment\terraform;
+            terraform fmt -check -diff; terraform validate -no-color; terraform
+            plan -refresh=false -no-color -in…)
+  ⎿  Success! The configuration is valid.
+     … +18 lines (ctrl+o to expand)
+  ⎿  (timeout 5m)
+
+● Terraform validates, fmt is clean, and the plan shows the filtered rule with
+  Intelligent-Tiering at day 30, Glacier at day 180, and noncurrent purge. Now
+  B1.md:
+
+● Write(B1.md)
+  ⎿  Added 85 lines, removed 1 line
+       3  What's the actual cost impact of an early deletion after archiv
+          al? How would you redesign the
+       4  lifecycle so this stops quietly costing more than budgeted?
+       5  
+       6 -<!-- Your answer here -->                                      
+       6 +## The actual cost impact                                      
+       7 +                                                               
+       8 +`storage_class = "GLACIER"` is S3 Glacier **Flexible Retrieval*
+         +*, which has a **90-day minimum                                
+       9 +storage duration**. An object deleted, overwritten or moved out
+         + before 90 days is charged a                                   
+      10 +pro-rated **early-deletion fee for the remaining days**, as if 
+         +it had stayed the full 90.                                     
+      11 +                                                               
+      12 +Timeline in the scenario:                                      
+      13 +                                                               
+      14 +| Day | Event | Billing |                                      
+      15 +|---|---|---|                                                  
+      16 +| 0 | Photo uploaded | S3 Standard |                           
+      17 +| 30 | Lifecycle transitions it to Glacier | Lifecycle transiti
+         +on request fee per object; 90-day Glacier clock starts |       
+      18 +| 40 | Seller requests deletion and we delete immediately | 10 
+         +days actually stored in Glacier, **80 days billed as early dele
+         +tion** |                                                       
+      19 +                                                               
+      20 +Per GB, at approximate us-east-1 list prices (Standard ≈ $0.023
+         +/GB-month, Glacier Flexible ≈                                  
+      21 +$0.0036/GB-month):                                             
+      22 +                                                               
+      23 +- Glacier storage actually used: 10 days ≈ **$0.0012**         
+      24 +- Glacier storage actually billed: 90 days ≈ **$0.0108**, which
+         + is **9×** the usage                                           
+      25 +  (early-delete portion ≈ $0.0096)                             
+      26 +- For comparison, leaving it in Standard for those 10 days ≈ $0
+         +.0077. Archiving and then deleting                             
+      27 +  cost **~40% more than never archiving at all**, before per-ob
+         +ject fees.                                                     
+      28 +                                                               
+      29 +Per-object costs make this worse for photos:                   
+      30 +- **Transition request fee** for every object moved to Glacier,
+         + whether it's later deleted or not.                            
+      31 +  It's charged per object, not per GB, so millions of photos ad
+         +d up.                                                          
+      32 +- **~40 KB of billable overhead per archived object** (index an
+         +d metadata: about 32 KB at the                                 
+      33 +  Glacier rate plus 8 KB at the Standard rate). For thumbnails 
+         +and small images this can be a                                 
+      34 +  large fraction of, or more than, the image itself.           
+      35 +                                                               
+      36 +So the budget assumption that "Glacier is ~6× cheaper than Stan
+         +dard" only holds for objects that                              
+      37 +**stay at least 90 days after archival**. Sold-listing photos a
+         +re exactly the population most                                 
+      38 +likely to get a deletion request soon after the sale, so a mean
+         +ingful share of them never reach                               
+      39 +that point. The result is a cost that **quietly exceeds the bud
+         +get**: it shows up as an                                       
+      40 +early-delete line item (`EarlyDelete` usage types in the Cost a
+         +nd Usage Report) rather than as                                
+      41 +storage, and nobody models it up front.                        
+      42 +                                                               
+      43 +Two things that are *not* the fix:                             
+      44 +- **Don't delay deletion to avoid the fee.** The deletion must 
+         +happen within 30 days of the                                   
+      45 +  request (a privacy and legal obligation). It also saves nothi
+         +ng: keeping the object until day                               
+      46 +  120 costs exactly the same 90 days of Glacier storage. The de
+         +letion isn't the mistake. **The                                
+      47 +  mistake is archiving objects that have a high chance of being
+         + deleted within 90 days.**                                     
+      48 +- **Don't move the object out of Glacier before deleting it.** 
+         +That adds a restore or retrieval                               
+      49 +  charge and still triggers the same early-deletion fee.       
+      50 +                                                               
+      51 +Another bug in the original rule: it has **no `filter`**, so it
+         + archives **every** object in                                  
+      52 +`haven-listing-media` 30 days after upload. That includes photo
+         +s of *active* listings, which                                  
+      53 +would then need a Glacier restore (minutes to hours) before the
+         +y could be served.                                             
+      54 +                                                               
+      55 +## Redesign (implemented in `terraform/lifecycle.tf`)          
+      56 +                                                               
+      57 +1. **Scope the rule to sold listings only.** Filter on an objec
+         +t tag `listing_status = sold`,                                 
+      58 +   which the app sets via `PutObjectTagging` when a listing sel
+         +ls. Active listing photos stay hot.                            
+      59 +2. **Use a class with no minimum duration during the deletion-r
+         +isk window.** Day 30 →                                         
+      60 +   `INTELLIGENT_TIERING` instead of `GLACIER`. Intelligent-Tier
+         +ing has **no minimum storage                                   
+      61 +   duration, no early-delete fee and no retrieval fee**. It sti
+         +ll moves untouched objects to                                  
+      62 +   Infrequent Access after 30 days and Archive Instant Access a
+         +fter 90 days by itself, so most of                             
+      63 +   the savings remain. The cost is a small per-object monitorin
+         +g fee.                                                         
+      64 +3. **Archive deeply only after deletions have mostly stopped.**
+         + Day 180 → `GLACIER`. By then the                              
+      65 +   90-day minimum mostly overlaps time the photo would have bee
+         +n kept anyway. Tune 180 from real                              
+      66 +   data: plot the distribution of deletion requests by days sin
+         +ce sale, and set the Glacier                                   
+      67 +   transition past the point where most requests have arrived, 
+         +plus a buffer.                                                 
+      68 +4. **Skip tiny objects.** `object_size_greater_than = 128 KB`. 
+         +Below that, Intelligent-Tiering                                
+      69 +   doesn't auto-tier, and Glacier's per-object overhead and tra
+         +nsition fees cost more than they                               
+      70 +   save. Thumbnails stay in Standard.                          
+      71 +5. **Make deletion actually delete.** If versioning is (or late
+         +r gets) enabled, a delete only                                 
+      72 +   creates a delete marker. The archived bytes keep billing as 
+         +a noncurrent version *and* the                                 
+      73 +   30-day deletion requirement isn't met. Added a rule that exp
+         +ires noncurrent versions after                                 
+      74 +   1 day, plus cleanup of incomplete multipart uploads.        
+      75 +                                                               
+      76 +Alternative if the access pattern is well known: `STANDARD_IA` 
+         +at day 30 (30-day minimum, so a                                
+      77 +day-40 deletion costs at most ~20 extra IA-days) before `GLACIE
+         +R` later. I chose                                              
+      78 +Intelligent-Tiering because it removes the minimum-duration ris
+         +k completely.                                                  
+      79 +                                                               
+      80 +### Make it visible so it can't stay quiet                     
+      81 +                                                               
+      82 +- Budget for the early-delete and transition line items explici
+         +tly, using the observed deletion                               
+      83 +  rate × average remaining days.                               
+      84 +- Add an AWS Budgets alert, or a CUR/Cost Explorer filter, on t
+         +he `EarlyDelete` and transition                                
+      85 +  usage types for this bucket, tagged with `landlord_account_id
+         +` so the cost is attributed to                                 
+      86 +  the billing unit (ties into B2).                             
+      87 +- Review the real deletion-request curve every quarter and adju
+         +st the day-180 Glacier transition.                             
+      88 +                                                               
+      89 +Plan output for the redesigned lifecycle: `logs/07_b1_lifecycle
+         +_plan.txt` (`terraform validate`                               
+      90 +passes; `terraform fmt -check` is clean).                      
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment; git add B1.md
+            terraform/lifecycle.tf logs/07_b1_lifecycle_plan.txt; git commit -q
+            -m "B1: scope archival to sol…)
+  ⎿  warning: in the working copy of 'B1.md', LF will be replaced by CRLF t
+     he next time Git touches it
+     8cbcca4 B1: scope archival to sold photos, Intelligent-Tiering before
+     Glacier, purge noncurrent versions
+
+● B0 and B1 are done and committed (4 commits so far).
+
+  Before B2: your on-camera narration
+
+  The assignment requires you to say this out loud before any B2 code is
+  written. If you haven't yet, say it now in your own words:
+
+  1. "The README says LandlordAccount is the billing unit, and a PropertyManager
+     is scoped to exactly one. So the access boundary is the landlord account,
+     not the tenant or property."
+  2. "It also warns that the existing code uses whatever ID was on hand. So the
+     cost-tag check must require landlord_account_id, and a tenant_id tag like
+     the one on listing_media must fail."
+  3. "Reports and tenants don't store the landlord ID, so the access check has
+     to walk report → tenant → property → landlord_account_id, compare it with
+     the manager's account, and deny if any link is missing."
+  4. "For idempotency, I'll dedupe by resource address, and sort the output, so
+     two runs give identical output and exit code."
+
+  Reply "said it" when you're done and I'll build B2 (access check, tag check
+  and tests). One note on .ai-conversations/: it needs a real AI mistake that
+  you caught. While I build B2, review my code critically. If something looks
+  wrong, call it out on camera and we'll record that exchange honestly. Please
+  don't stage a fake one.
+
+> saod ot
+
+● Now B2. First the access check, which walks report → tenant → property →
+  landlord account and denies by default:
+
+● Write(app\access_control.py)
+  ⎿  Added 44 lines, removed 1 line
+       6  one LandlordAccount.
+       7  
+       8  Work out from that hierarchy which boundary actually gates acce
+          ss to a ScreeningReport.
+       9 +                                                               
+      10 +Answer: the LandlordAccount. Neither ScreeningReport nor Tenant
+         + carries landlord_account_id, so                               
+      11 +the owning account is resolved by walking report -> tenant -> p
+         +roperty -> landlord_account_id and                             
+      12 +comparing that with the actor's landlord_account_id. Every look
+         +up fails closed.                                               
+      13  """
+      14 +from typing import Optional, TypeVar                           
+      15 +                                                               
+      16  from app.models import PropertyManager, ScreeningReport, Proper
+          ty, Tenant
+      17  
+      18 +T = TypeVar("T", Property, Tenant)                             
+      19  
+      20 +                                                               
+      21 +def _find_unique(records: list[T], record_id: str) -> Optional[
+         +T]:                                                            
+      22 +    """Return the single record with this id, or None if it's a
+         +bsent OR ambiguous.                                            
+      23 +                                                               
+      24 +    A duplicated id means we can't be sure which parent the chi
+         +ld really belongs to, so it is                                 
+      25 +    treated the same as "not found" (fail closed) rather than t
+         +rusting whichever matched first.                               
+      26 +    """                                                        
+      27 +    if not record_id:                                          
+      28 +        return None                                            
+      29 +    matches = [r for r in (records or []) if r is not None and 
+         +r.id == record_id]                                             
+      30 +    return matches[0] if len(matches) == 1 else None           
+      31 +                                                               
+      32 +                                                               
+      33 +def _owning_landlord_account_id(                               
+      34 +    report: ScreeningReport, *, properties: list[Property], ten
+         +ants: list[Tenant]                                             
+      35 +) -> Optional[str]:                                            
+      36 +    tenant = _find_unique(tenants, report.tenant_id)           
+      37 +    if tenant is None:                                         
+      38 +        return None                                            
+      39 +    prop = _find_unique(properties, tenant.property_id)        
+      40 +    if prop is None:                                           
+      41 +        return None                                            
+      42 +    return prop.landlord_account_id or None                    
+      43 +                                                               
+      44 +                                                               
+      45  def can_access_screening_report(
+      46      actor: PropertyManager,
+      47      report: ScreeningReport,
+     ...
+      58      Return True if actor may view report, False otherwise. Fail
+           closed — if anything needed to
+      59      make this determination is missing (tenant not found, prope
+          rty not found), return False.
+      60      """
+      29 -    raise NotImplementedError("Implement this.")               
+      61 +    if actor is None or report is None:                        
+      62 +        return False                                           
+      63 +                                                               
+      64 +    actor_account = actor.landlord_account_id                  
+      65 +    if not actor_account:                                      
+      66 +        return False                                           
+      67 +                                                               
+      68 +    report_account = _owning_landlord_account_id(report, proper
+         +ties=properties, tenants=tenants)                              
+      69 +    if report_account is None:                                 
+      70 +        return False                                           
+      71 +                                                               
+      72 +    return actor_account == report_account                     
+
+● Write(tests\test_access_control.py)
+  ⎿  Added 70 lines
+       8  Use the `property_managers`, `properties`, `tenants`, and `scre
+          ening_reports` fixtures from
+       9  conftest.py — don't re-invent the seed data here.
+      10  """
+      11 +import pytest                                                  
+      12 +                                                               
+      13  from app.access_control import can_access_screening_report
+      14 +from app.models import Property, Tenant                        
+      15 +                                                               
+      16 +                                                               
+      17 +def _by_id(records, record_id):                                
+      18 +    return next(r for r in records if r.id == record_id)       
+      19 +                                                               
+      20 +                                                               
+      21 +def test_pm_001_denied_cross_account_report(property_managers, 
+         +properties, tenants, screening_reports):                       
+      22 +    pm_001 = _by_id(property_managers, "pm-001")               
+      23 +    rep_002 = _by_id(screening_reports, "rep-002")  # ten-002 -
+         +> prop-002 -> la-002                                           
+      24 +                                                               
+      25 +    assert can_access_screening_report(pm_001, rep_002, propert
+         +ies=properties, tenants=tenants) is False                      
+      26 +                                                               
+      27 +                                                               
+      28 +def test_pm_001_allowed_own_account_report(property_managers, p
+         +roperties, tenants, screening_reports):                        
+      29 +    pm_001 = _by_id(property_managers, "pm-001")               
+      30 +    rep_001 = _by_id(screening_reports, "rep-001")  # ten-001 -
+         +> prop-001 -> la-001                                           
+      31 +                                                               
+      32 +    assert can_access_screening_report(pm_001, rep_001, propert
+         +ies=properties, tenants=tenants) is True                       
+      33 +                                                               
+      34 +                                                               
+      35 +@pytest.mark.parametrize(                                      
+      36 +    "pm_id, rep_id, expected",                                 
+      37 +    [                                                          
+      38 +        ("pm-001", "rep-001", True),                           
+      39 +        ("pm-001", "rep-002", False),                          
+      40 +        ("pm-002", "rep-002", True),                           
+      41 +        ("pm-002", "rep-001", False),                          
+      42 +    ],                                                         
+      43 +)                                                              
+      44 +def test_access_matrix_is_symmetric(pm_id, rep_id, expected, pr
+         +operty_managers, properties, tenants, screening_reports):      
+      45 +    pm = _by_id(property_managers, pm_id)                      
+      46 +    rep = _by_id(screening_reports, rep_id)                    
+      47 +                                                               
+      48 +    assert can_access_screening_report(pm, rep, properties=prop
+         +erties, tenants=tenants) is expected                           
+      49 +                                                               
+      50 +                                                               
+      51 +def test_fails_closed_when_tenant_missing(property_managers, pr
+         +operties, tenants, screening_reports):                         
+      52 +    pm_001 = _by_id(property_managers, "pm-001")               
+      53 +    rep_001 = _by_id(screening_reports, "rep-001")             
+      54 +    tenants_without_ten_001 = [t for t in tenants if t.id != "t
+         +en-001"]                                                       
+      55 +                                                               
+      56 +    assert can_access_screening_report(pm_001, rep_001, propert
+         +ies=properties, tenants=tenants_without_ten_001) is False      
+      57 +                                                               
+      58 +                                                               
+      59 +def test_fails_closed_when_property_missing(property_managers, 
+         +properties, tenants, screening_reports):                       
+      60 +    pm_001 = _by_id(property_managers, "pm-001")               
+      61 +    rep_001 = _by_id(screening_reports, "rep-001")             
+      62 +    properties_without_prop_001 = [p for p in properties if p.i
+         +d != "prop-001"]                                               
+      63 +                                                               
+      64 +    assert can_access_screening_report(pm_001, rep_001, propert
+         +ies=properties_without_prop_001, tenants=tenants) is False     
+      65 +                                                               
+      66 +                                                               
+      67 +def test_fails_closed_when_tenant_id_is_ambiguous(property_mana
+         +gers, properties, tenants, screening_reports):                 
+      68 +    """A duplicate tenant id pointing at another account must n
+         +ot grant access by list order."""                              
+      69 +    pm_002 = _by_id(property_managers, "pm-002")               
+      70 +    rep_001 = _by_id(screening_reports, "rep-001")             
+      71 +    tenants_with_dupe = [Tenant(id="ten-001", name="Impostor", 
+         +property_id="prop-002"), *tenants]                             
+      72 +                                                               
+      73 +    assert can_access_screening_report(pm_002, rep_001, propert
+         +ies=properties, tenants=tenants_with_dupe) is False            
+      74 +                                                               
+      75 +                                                               
+      76 +def test_fails_closed_when_property_has_no_landlord_account(pro
+         +perty_managers, tenants, screening_reports):                   
+      77 +    pm_001 = _by_id(property_managers, "pm-001")               
+      78 +    rep_001 = _by_id(screening_reports, "rep-001")             
+      79 +    orphan_props = [Property(id="prop-001", landlord_account_id
+         +="", address="12 Maple St")]                                   
+      80 +                                                               
+      81 +    assert can_access_screening_report(pm_001, rep_001, propert
+         +ies=orphan_props, tenants=tenants) is False                    
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment;
+            .\.venv\Scripts\python -m pytest tests/test_access_control.py -v
+            2>&1 | Select -Last 18)
+  ⎿  ============================= test session starts ====================
+     =========
+     platform win32 -- Python 3.14.6, pytest-9.2.0, pluggy-1.7.0 -- F:\Ajac
+     … +17 lines (ctrl+o to expand)
+
+● All 10 pass, including cross-account denied and same-account allowed.
+  Committing part 1 (and ignoring the pytest cache and the .mybak files):
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment; Add-Content
+            .gitignore ".pytest_cache/"; git add .gitignore
+            app/access_control.py tests/test_access_control.py;…)
+  ⎿  warning: in the working copy of 'app/access_control.py', LF will be re
+     placed by CRLF the next time Git touches it
+     warning: in the working copy of 'tests/test_access_control.py', LF wil
+     … +3 lines (ctrl+o to expand)
+
+● Now part 2, the cost-tag check. Idempotency key: the Terraform resource
+  address. Output is deduplicated by address and sorted, so it never depends on
+  input order or on any state kept between runs.
+
+● Write(scripts\cost_tag_check.py)
+  ⎿  Added 82 lines, removed 1 line
+       17    - Prints which specific resource address(es) are missing the
+            tag.
+       18  
+       19  Run manually: python scripts/cost_tag_check.py fixtures/plan.j
+           son
+       20 +                                                              
+       21 +Exit codes: 0 = all checked resources tagged, 1 = at least one
+          + missing the tag,                                             
+       22 +2 = the plan file couldn't be read or parsed (fail closed, nev
+          +er a silent pass).                                            
+       23  """
+       24  import json
+       25  import sys
+       26  
+       27 +# LandlordAccount is the billing unit (README domain model). t
+          +enant_id / property_id are NOT                                
+       28 +# acceptable substitutes, even though some resources happen to
+          + carry them.                                                  
+       29 +REQUIRED_TAG = "landlord_account_id"                          
+       30  
+       31 +CHECKED_ACTIONS = {"create", "update"}                        
+       32 +                                                              
+       33 +EXIT_OK = 0                                                   
+       34 +EXIT_MISSING_TAG = 1                                          
+       35 +EXIT_BAD_PLAN = 2                                             
+       36 +                                                              
+       37 +                                                              
+       38 +def _is_checked(change: dict) -> bool:                        
+       39 +    """Create/update (including replace = ["delete","create"])
+          + with a real `after` block."""                                
+       40 +    actions = change.get("actions") or []                     
+       41 +    return bool(CHECKED_ACTIONS.intersection(actions)) and isi
+          +nstance(change.get("after"), dict)                            
+       42 +                                                              
+       43 +                                                              
+       44 +def _has_billing_tag(after: dict) -> bool:                    
+       45 +    """True if the resource's effective tags carry a non-blank
+          + landlord_account_id.                                         
+       46 +                                                              
+       47 +    `tags_all` is included because tags inherited from the pro
+          +vider's `default_tags` only show up                           
+       48 +    there, and AWS bills on the effective tag set.            
+       49 +    """                                                       
+       50 +    for key in ("tags", "tags_all"):                          
+       51 +        tags = after.get(key)                                 
+       52 +        if isinstance(tags, dict):                            
+       53 +            value = tags.get(REQUIRED_TAG)                    
+       54 +            if isinstance(value, str) and value.strip():      
+       55 +                return True                                   
+       56 +    return False                                              
+       57 +                                                              
+       58 +                                                              
+       59 +def find_untagged(plan: dict) -> tuple[list[str], int]:       
+       60 +    """Return (sorted unique addresses missing the tag, number
+          + of unique addresses checked).                                
+       61 +                                                              
+       62 +    Idempotency key: the resource `address`. Results are colle
+          +cted in sets keyed by address, so a                           
+       63 +    resource listed more than once in a plan is reported once,
+          + and the output is sorted, so it                              
+       64 +    doesn't depend on input order.                            
+       65 +    """                                                       
+       66 +    checked: set[str] = set()                                 
+       67 +    missing: set[str] = set()                                 
+       68 +                                                              
+       69 +    for rc in plan.get("resource_changes") or []:             
+       70 +        if not isinstance(rc, dict):                          
+       71 +            continue                                          
+       72 +        change = rc.get("change") or {}                       
+       73 +        if not isinstance(change, dict) or not _is_checked(cha
+          +nge):                                                         
+       74 +            continue                                          
+       75 +        address = rc.get("address")                           
+       76 +        if not address:                                       
+       77 +            continue                                          
+       78 +        checked.add(address)                                  
+       79 +        if not _has_billing_tag(change["after"]):             
+       80 +            missing.add(address)                              
+       81 +                                                              
+       82 +    return sorted(missing), len(checked)                      
+       83 +                                                              
+       84 +                                                              
+       85  def check_plan(plan_path: str) -> int:
+       86      """
+       87      Returns an exit code: 0 if every resource being created or
+            updated has
+       88      `landlord_account_id`, non-zero otherwise.
+       89      """
+       30 -    raise NotImplementedError("Implement this.")              
+       90 +    try:                                                      
+       91 +        with open(plan_path, encoding="utf-8") as fh:         
+       92 +            plan = json.load(fh)                              
+       93 +        if not isinstance(plan, dict):                        
+       94 +            raise ValueError("top-level JSON is not an object"
+          +)                                                             
+       95 +    except (OSError, ValueError) as exc:                      
+       96 +        print(f"ERROR: could not read plan {plan_path!r}: {exc
+          +}")                                                           
+       97 +        return EXIT_BAD_PLAN                                  
+       98  
+       99 +    missing, checked_count = find_untagged(plan)              
+      100  
+      101 +    if missing:                                               
+      102 +        print(f"FAIL: {len(missing)} of {checked_count} resour
+          +ce(s) being created/updated are missing required tag '{REQUIRE
+          +D_TAG}':")                                                    
+      103 +        for address in missing:                               
+      104 +            print(f"  - {address}")                           
+      105 +        return EXIT_MISSING_TAG                               
+      106 +                                                              
+      107 +    print(f"PASS: all {checked_count} resource(s) being create
+          +d/updated carry '{REQUIRED_TAG}'.")                           
+      108 +    return EXIT_OK                                            
+      109 +                                                              
+      110 +                                                              
+      111  if __name__ == "__main__":
+      112 +    if len(sys.argv) != 2:                                    
+      113 +        print("usage: python scripts/cost_tag_check.py <plan.j
+          +son>")                                                        
+      114 +        sys.exit(EXIT_BAD_PLAN)                               
+      115      sys.exit(check_plan(sys.argv[1]))
+
+● Write(tests\test_cost_tag_check.py)
+  ⎿  Added 131 lines
+       12  instead of the shared fixture, write one with pytest's `tmp_pa
+           th` rather than editing
+       13  fixtures/plan.json. You don't need to shell out to the real sc
+           ript for every case.
+       14  """
+       15 +import json                                                   
+       16 +from pathlib import Path                                      
+       17 +                                                              
+       18  from scripts.cost_tag_check import check_plan
+       19 +                                                              
+       20 +FIXTURE = str(Path(__file__).resolve().parent.parent / "fixtur
+          +es" / "plan.json")                                            
+       21 +                                                              
+       22 +FLAGGED = ["aws_lambda_function.mls_feed_sync", "aws_s3_bucket
+          +.listing_media"]                                              
+       23 +PASSING = ["aws_s3_bucket.landlord_media[0]", "aws_lambda_func
+          +tion.screening_report_export"]                                
+       24 +SKIPPED = ["aws_s3_bucket.archive_media", "aws_s3_bucket.decom
+          +missioned_media"]                                             
+       25 +                                                              
+       26 +                                                              
+       27 +def _write_plan(tmp_path, resource_changes):                  
+       28 +    path = tmp_path / "plan.json"                             
+       29 +    path.write_text(json.dumps({"format_version": "1.2", "reso
+          +urce_changes": resource_changes}))                            
+       30 +    return str(path)                                          
+       31 +                                                              
+       32 +                                                              
+       33 +def _rc(address, actions, tags):                              
+       34 +    return {"address": address, "type": "aws_s3_bucket", "chan
+          +ge": {"actions": actions, "after": {"tags": tags}}}           
+       35 +                                                              
+       36 +                                                              
+       37 +# 1. Happy path against the shared fixture                    
+       38 +                                                              
+       39 +def test_fixture_flags_exactly_the_untagged_resources(capsys):
+       40 +    code = check_plan(FIXTURE)                                
+       41 +    out = capsys.readouterr().out                             
+       42 +                                                              
+       43 +    assert code != 0                                          
+       44 +    flagged_lines = sorted(line.strip()[2:] for line in out.sp
+          +litlines() if line.strip().startswith("- "))                  
+       45 +    assert flagged_lines == sorted(FLAGGED)                   
+       46 +                                                              
+       47 +                                                              
+       48 +def test_fixture_passes_resources_that_carry_landlord_account_
+          +id(capsys):                                                   
+       49 +    check_plan(FIXTURE)                                       
+       50 +    out = capsys.readouterr().out                             
+       51 +                                                              
+       52 +    for address in PASSING:                                   
+       53 +        assert address not in out                             
+       54 +                                                              
+       55 +                                                              
+       56 +def test_tenant_id_tag_is_not_a_substitute_for_landlord_accoun
+          +t_id(capsys):                                                 
+       57 +    """listing_media carries tenant_id only, which is the 'ID 
+          +on hand' trap from the README."""                             
+       58 +    check_plan(FIXTURE)                                       
+       59 +    assert "aws_s3_bucket.listing_media" in capsys.readouterr(
+          +).out                                                         
+       60 +                                                              
+       61 +                                                              
+       62 +def test_fixture_noop_and_delete_entries_are_ignored_without_c
+          +rashing(capsys):                                              
+       63 +    check_plan(FIXTURE)                                       
+       64 +    out = capsys.readouterr().out                             
+       65 +                                                              
+       66 +    for address in SKIPPED:                                   
+       67 +        assert address not in out                             
+       68 +    assert "4 resource(s)" not in out or "2 of 4" in out  # on
+          +ly the 4 create/update entries counted                        
+       69 +    assert "2 of 4" in out                                    
+       70 +                                                              
+       71 +                                                              
+       72 +# 2. Idempotency                                              
+       73 +                                                              
+       74 +def test_running_twice_gives_identical_output_and_exit_code(ca
+          +psys):                                                        
+       75 +    first_code = check_plan(FIXTURE)                          
+       76 +    first_out = capsys.readouterr().out                       
+       77 +    second_code = check_plan(FIXTURE)                         
+       78 +    second_out = capsys.readouterr().out                      
+       79 +                                                              
+       80 +    assert first_code == second_code != 0                     
+       81 +    assert first_out == second_out                            
+       82 +    for address in FLAGGED:                                   
+       83 +        assert first_out.count(address) == 1                  
+       84 +                                                              
+       85 +                                                              
+       86 +def test_duplicate_address_in_one_plan_is_reported_once(tmp_pa
+          +th, capsys):                                                  
+       87 +    plan = _write_plan(tmp_path, [                            
+       88 +        _rc("aws_s3_bucket.dupe", ["create"], {}),            
+       89 +        _rc("aws_s3_bucket.dupe", ["create"], {}),            
+       90 +    ])                                                        
+       91 +                                                              
+       92 +    assert check_plan(plan) == 1                              
+       93 +    out = capsys.readouterr().out                             
+       94 +    assert out.count("aws_s3_bucket.dupe") == 1               
+       95 +    assert "1 of 1" in out                                    
+       96 +                                                              
+       97 +                                                              
+       98 +def test_output_is_independent_of_input_order(tmp_path, capsys
+          +):                                                            
+       99 +    a = _rc("aws_s3_bucket.a", ["create"], {})                
+      100 +    b = _rc("aws_s3_bucket.b", ["update"], {"tenant_id": "ten-
+          +001"})                                                        
+      101 +                                                              
+      102 +    check_plan(_write_plan(tmp_path, [a, b]))                 
+      103 +    forward = capsys.readouterr().out                         
+      104 +    check_plan(_write_plan(tmp_path, [b, a]))                 
+      105 +    reverse = capsys.readouterr().out                         
+      106 +                                                              
+      107 +    assert forward == reverse                                 
+      108 +                                                              
+      109 +                                                              
+      110 +# Edge cases                                                  
+      111 +                                                              
+      112 +def test_all_tagged_plan_passes(tmp_path, capsys):            
+      113 +    plan = _write_plan(tmp_path, [_rc("aws_s3_bucket.ok", ["cr
+          +eate"], {"landlord_account_id": "la-001"})])                  
+      114 +                                                              
+      115 +    assert check_plan(plan) == 0                              
+      116 +    assert "PASS" in capsys.readouterr().out                  
+      117 +                                                              
+      118 +                                                              
+      119 +def test_replace_action_is_checked(tmp_path):                 
+      120 +    plan = _write_plan(tmp_path, [_rc("aws_s3_bucket.replaced"
+          +, ["delete", "create"], {})])                                 
+      121 +                                                              
+      122 +    assert check_plan(plan) == 1                              
+      123 +                                                              
+      124 +                                                              
+      125 +def test_blank_or_null_tag_value_counts_as_missing(tmp_path): 
+      126 +    plan = _write_plan(tmp_path, [                            
+      127 +        _rc("aws_s3_bucket.blank", ["create"], {"landlord_acco
+          +unt_id": "  "}),                                              
+      128 +        _rc("aws_s3_bucket.nulltags", ["create"], None),      
+      129 +    ])                                                        
+      130 +                                                              
+      131 +    assert check_plan(plan) == 1                              
+      132 +                                                              
+      133 +                                                              
+      134 +def test_tag_inherited_via_default_tags_in_tags_all_passes(tmp
+          +_path):                                                       
+      135 +    rc = {"address": "aws_s3_bucket.defaulted", "type": "aws_s
+          +3_bucket",                                                    
+      136 +          "change": {"actions": ["create"], "after": {"tags": 
+          +{}, "tags_all": {"landlord_account_id": "la-003"}}}}          
+      137 +                                                              
+      138 +    assert check_plan(_write_plan(tmp_path, [rc])) == 0       
+      139 +                                                              
+      140 +                                                              
+      141 +def test_unreadable_plan_fails_closed(tmp_path):              
+      142 +    bad = tmp_path / "bad.json"                               
+      143 +    bad.write_text("{not json")                               
+      144 +                                                              
+      145 +    assert check_plan(str(bad)) not in (0, None)              
+      146 +    assert check_plan(str(tmp_path / "missing.json")) not in (
+          +0, None)                                                      
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment;
+            .\.venv\Scripts\python -m pytest tests -v 2>&1 | Select -Last 30)
+  ⎿  ============================= test session starts ====================
+     =========
+     platform win32 -- Python 3.14.6, pytest-9.2.0, pluggy-1.7.0 -- F:\Ajac
+     … +33 lines (ctrl+o to expand)
+
+● All 22 tests pass, but I found a tautological assertion in my own test that
+  would pass no matter what, so I'm replacing it with a check that would
+  actually catch counting the no-op or delete entries. · summary
+
+● Update(tests\test_cost_tag_check.py)
+  ⎿  Added 3 lines, removed 2 lines
+      65  
+      66      for address in SKIPPED:
+      67          assert address not in out
+      68 -    assert "4 resource(s)" not in out or "2 of 4" in out  # onl
+         -y the 4 create/update entries counted                          
+      69 -    assert "2 of 4" in out                                     
+      68 +    # 6 entries in the fixture; only the 4 create/update ones a
+         +re counted. If no-op or delete                                 
+      69 +    # were checked, this would read "of 5" / "of 6" (and archiv
+         +e_media would be flagged).                                     
+      70 +    assert "2 of 4 resource(s)" in out                         
+      71  
+      72  
+      73  # 2. Idempotency
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment;
+            .\.venv\Scripts\python -m pytest tests -q 2>&1 | Select -Last 3)
+  ⎿  ......................
+        [100%]
+     22 passed in 0.18s
+
+● To prove the fixed assertion actually catches the bug, I'll briefly break the
+  code so it also checks no-op, confirm the test fails, then revert:
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment;
+            $f="scripts\cost_tag_check.py"; $orig=Get-Content $f -Raw
+            ($orig -replace 'CHECKED_ACTIONS = \{"create", "updat…)
+  ⎿  >           assert address not in out
+     E           AssertionError: assert 'aws_s3_buck...rchive_media' not in
+      'FAIL: 3 of ...ting_media\n'
+     … +10 lines (ctrl+o to expand)
+● A mutation test was caught and reverted, leaving all 22 tests passing; next
+  I'm running both suites and the tag check twice for TERMINAL_LOG.md, comparing
+  the outputs byte for byte. · summary
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment;
+            $py=".\.venv\Scripts\python"
+            & $py -m pytest tests/test_access_control.py -v *>&1 | Tee-Object
+            logs\09_b2_test_…)
+  ⎿  Error: Exit code 1
+     ============================= 10 passed in 0.11s
+     ==============================
+     ============================= 12 passed in 0.24s
+     ==============================
+     FAIL: 2 of 4 resource(s) being created/updated are missing required tag
+     'landlord_account_id':
+       - aws_lambda_function.mls_feed_sync
+       - aws_s3_bucket.listing_media
+     exit code: 1
+     FAIL: 2 of 4 resource(s) being created/updated are missing required tag
+     'landlord_account_id':
+       - aws_lambda_function.mls_feed_sync
+       - aws_s3_bucket.listing_media
+
+     … +4 lines (ctrl+o to expand)
+
+● Both runs produce identical output, the same exit code (1), and the same
+  SHA-256 hash. Exit code 1 is correct, because the fixture really does contain
+  two untagged resources. Committing part 2:
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment; git add
+            scripts/cost_tag_check.py tests/test_cost_tag_check.py logs/; git
+            commit -q -m "B2.2: idempotent landlo…)
+  ⎿  warning: in the working copy of 'scripts/cost_tag_check.py', LF will b
+     e replaced by CRLF the next time Git touches it
+     warning: in the working copy of 'tests/test_cost_tag_check.py', LF wil
+     … +12 lines (ctrl+o to expand)
+
+● Now the documentation. First DESIGN_NOTES.md:
+
+● Write(DESIGN_NOTES.md)
+  ⎿  Added 82 lines, removed 2 lines
+       7  plan file produces identical output and exit code without the s
+          cript keeping any record
+       8  between runs. Use the word "idempotency" in your explanation.
+       9  
+      10 -<!-- Your answer here -->                                      
+      10 +**The idempotency key is the Terraform resource `address`** (`r
+         +esource_changes[].address`, for                                
+      11 +example `aws_s3_bucket.listing_media` or `aws_s3_bucket.landlor
+         +d_media[0]`, including any                                     
+      12 +`module.` prefix and the `[index]` or `["key"]` instance suffix
+         +).                                                             
+      13  
+      14 +Why `address`:                                                 
+      15 +- It's Terraform's own unique identity for a resource instance 
+         +within a plan. Two entries with                                
+      16 +  the same address are the same resource, and two different add
+         +resses are always different                                    
+      17 +  resources, even when they share `type`, `name` or bucket name
+         +.                                                              
+      18 +- `type` or `name` alone would merge different instances (`land
+         +lord_media[0]` vs                                              
+      19 +  `landlord_media[1]`). The bucket name or function name isn't 
+         +always known at plan time, and two                             
+      20 +  resources could share it.                                    
+      21 +                                                               
+      22 +How idempotency is guaranteed with no state between runs:      
+      23 +1. **Dedup within a run.** Checked and missing resources are co
+         +llected into `set`s keyed by                                   
+      24 +   `address`, so if the same address appears more than once in 
+         +`resource_changes` it's counted                                
+      25 +   and printed once (`test_duplicate_address_in_one_plan_is_rep
+         +orted_once`).                                                  
+      26 +2. **Deterministic output.** Missing addresses are printed `sor
+         +ted()`, so the output doesn't                                  
+      27 +   depend on JSON order (`test_output_is_independent_of_input_o
+         +rder`).                                                        
+      28 +3. **Pure function of the input.** `check_plan()` only reads th
+         +e plan file. It writes no files,                               
+      29 +   keeps no cache or "already reported" list, and reads no cloc
+         +k, environment or random value.                                
+      30 +   The output and exit code depend only on the file's contents,
+         + so running it again against an                                
+      31 +   unchanged plan gives byte-identical output and the same exit
+         + code. In `TERMINAL_LOG.md`, both                              
+      32 +   runs produce the same SHA-256 hash and exit 1.              
+      33 +                                                               
+      34 +Keeping a record of already-reported resources between runs wou
+         +ld actually *break* idempotency.                               
+      35 +The second run would print nothing and could flip from fail to 
+         +pass on an unchanged plan.                                     
+      36 +                                                               
+      37  ## Any other decision with a non-obvious alternative
+      38  
+      14 -<!-- Your answer here -->                                      
+      39 +**Access control: boundary = LandlordAccount, resolved by walki
+         +ng the hierarchy.**                                            
+      40 +`ScreeningReport` and `Tenant` don't carry `landlord_account_id
+         +`, so access is decided by                                     
+      41 +`report.tenant_id → Tenant.property_id → Property.landlord_acco
+         +unt_id == actor.landlord_account_id`.                          
+      42 +- *Alternative:* compare tenant or property IDs, or add `landlo
+         +rd_account_id` to the report.                                  
+      43 +  Rejected. The README says the landlord account is the scope, 
+         +and the models and seed data must                              
+      44 +  not be modified. Denormalising the ID onto the report would a
+         +lso create a second source of                                  
+      45 +  truth that can drift.                                        
+      46 +                                                               
+      47 +**Access control: duplicate or ambiguous IDs fail closed.**    
+      48 +If more than one tenant (or property) matches an ID, access is 
+         +denied instead of trusting the                                 
+      49 +first match.                                                   
+      50 +- *Alternative:* `next()` on the first match. Simpler, but list
+         + order would then decide a                                     
+      51 +  security outcome (`test_fails_closed_when_tenant_id_is_ambigu
+         +ous`). An empty                                                
+      52 +  `landlord_account_id` on either side also denies, so `"" == "
+         +"` can never grant access.                                     
+      53 +                                                               
+      54 +**Tag check: which actions are checked.**                      
+      55 +A resource is checked if `change.actions` contains `create` or 
+         +`update` **and** `after` is an                                 
+      56 +object. This includes replace (`["delete","create"]`), because 
+         +a replacement is a new resource                                
+      57 +that must be tagged. `no-op`, `read` and pure `delete` (`after:
+         + null`) are skipped.                                           
+      58 +- *Alternative:* require `actions == ["create"]` or `["update"]
+         +` exactly. That would let replaced                             
+      59 +  resources through untagged (`test_replace_action_is_checked`)
+         +.                                                              
+      60 +                                                               
+      61 +**Tag check: `tags` OR `tags_all` satisfies the requirement.** 
+      62 +Tags inherited from the provider's `default_tags` appear only i
+         +n `tags_all`, and AWS cost                                     
+      63 +allocation uses the effective tag set.                         
+      64 +- *Alternative:* `tags` only. Stricter (it forces an explicit p
+         +er-resource tag), but it would                                 
+      65 +  wrongly fail correctly billed resources that use `default_tag
+         +s`, which is the idiomatic pattern                             
+      66 +  for this.                                                    
+      67 +                                                               
+      68 +**Tag check: what counts as "missing".**                       
+      69 +An absent key, a `null` tag map, or a blank or whitespace value
+         + all count as missing. Any other                               
+      70 +tag (`tenant_id`, `property_id`) is ignored. This is the README
+         +'s "ID on hand" trap:                                          
+      71 +`listing_media` is tagged `tenant_id` and fails.               
+      72 +- *Alternative:* validate the value against known landlord acco
+         +unt IDs. That's a stronger check,                              
+      73 +  but it needs a source of truth for valid accounts that the pl
+         +an doesn't contain. I left it as                               
+      74 +  a follow-up.                                                 
+      75 +                                                               
+      76 +**Tag check: exit codes.** `0` pass, `1` missing tag, `2` unrea
+         +dable or invalid plan. A broken                                
+      77 +plan file fails closed and is distinguishable from a tagging fa
+         +ilure in CI.                                                   
+      78 +                                                               
+      79 +**Tag check: resources that can't be tagged are not exempted.**
+      80 +Every created or updated resource is held to the rule. In a rea
+         +l plan that would also flag                                    
+      81 +resource types with no `tags` argument (for example `aws_s3_buc
+         +ket_lifecycle_configuration`).                                 
+      82 +- *Alternative:* skip resources whose `after` has no `tags` key
+         +, or keep an allowlist of                                      
+      83 +  untaggable types. That's the right next step for real plans, 
+         +but it isn't needed for this                                   
+      84 +  fixture. An implicit skip based on a missing key would risk s
+         +ilently passing a taggable                                     
+      85 +  resource whose tags were simply omitted, so I'd use an explic
+         +it, reviewed allowlist instead.                                
+      86 +                                                               
+      87 +**B0: `for_each` + `moved` blocks rather than `terraform state 
+         +mv`.**                                                         
+      88 +`moved` blocks are declarative and reviewed in the PR, and they
+         + apply in every environment and                                
+      89 +workspace automatically. `state mv` is a manual, per-environmen
+         +t step that's easy to miss.                                    
+      90 +                                                               
+      91 +**B1: Intelligent-Tiering rather than Standard-IA as the first 
+         +tier for sold photos.**                                        
+      92 +Standard-IA still has a 30-day minimum duration. Intelligent-Ti
+         +ering has none, which removes                                  
+      93 +early-delete risk completely during the deletion-request window
+         +, at the cost of a small                                       
+      94 +per-object monitoring fee.                                     
+
+● Next, TERMINAL_LOG.md, built from the actual captured log files so nothing is
+  retyped:
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment
+            $sections = [ordered]@{…)
+  ⎿  830
+     ## 1. Setup (python, terraform, venv, pip install, pytest)
+     ## 2. terraform init
+     … +13 lines (ctrl+o to expand)
+
+● One correction to keep the log honest: section 7's command line lists fmt and
+  validate, but I only captured the plan output to that file. I'll re-run those
+  two now and add their real output:
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment\terraform; $r = & {
+            "> terraform fmt -check -recursive"; terraform fmt -check
+            -recursive; "fmt exit code: $LASTE…)
+  ⎿  > terraform fmt -check -recursive
+     fmt exit code: 0
+     > terraform validate
+     … +5 lines (ctrl+o to expand)
+
+● I'll note in .ai-conversations/ that the B2 exchange's tautological assertion
+  was caught while re-reading my own test file before commit, not found by you.
+  · summary
+
+● Write(.ai-conversations\B2-claude-code-session.md)
+  ⎿  Wrote 119 lines to .ai-conversations\B2-claude-code-session.md
+      1 # B2 — AI conversation record
+      2
+      3 **Tool:** Claude Code (VS Code extension), model Claude Opus 5.5,
+         used for the whole assessment
+      4 in one session, recorded on screen.
+      5 **Scope of this file:** the B2 part of the session (prompts, what
+         the AI produced, what was
+      6 reviewed and changed). The complete raw session transcript is exp
+        orted alongside as
+      7 `full-session-export.txt` (see the note at the bottom).
+     … +112 lines (ctrl+o to expand)
+
+● Now a submission section in README.md, with a placeholder for the recording
+  link until the video is uploaded:
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment; $add = @'…)
+  ⎿  warning: in the working copy of 'DESIGN_NOTES.md', LF will be replaced
+      by CRLF the next time Git touches it
+     warning: in the working copy of 'README.md', LF will be replaced by CR
+     … +11 lines (ctrl+o to expand)
+
+● All seven commits are in place on top of the starter commit, and gh is logged
+  in as imsameerkhan12. Before I create the GitHub repo, which is visible to
+  others, I'll check with you. · summary
+
+● User answered Claude's questions:
+  ⎿  · How should I publish the assignment repo to your GitHub account
+     (imsameerkhan12)? Reviewers at Tacnique/Ajackus need to be able to open it.
+     → Public repo (Recommended)
+
+● Creating the public repo and pushing the full history. I'll keep the original
+  starter repo as an upstream remote.
+
+● PowerShell(cd f:\Ajackus_Assignment\haven-infra-assessment; git remote rename
+            origin upstream; git branch --show-current; gh repo create
+            imsameerkhan12/haven-infra-assessm…)
+  ⎿  main
+     https://github.com/imsameerkhan12/haven-infra-assessment
+     branch 'main' set up to track 'origin/main'.
+     … +9 lines (ctrl+o to expand)
+
+● The repo is live with all 8 commits (the starter plus mine):
+  https://github.com/imsameerkhan12/haven-infra-assessment
+
+  What's done
+
+  Task: B0
+  Result: Reproduced the bug: removing la-002 with count planned 3 destroys.
+  With
+    the for_each + moved fix it plans exactly 1 destroy, and switching over
+  plans
+     0.
+  ────────────────────────────────────────
+  Task: B1
+  Result: Explained the 90-day Glacier minimum: a day-40 delete is billed for 80
+
+    more days, about 9× the storage actually used. Rewrote the lifecycle rule to
+
+    cover only sold photos, use Intelligent-Tiering first and Glacier at day
+  180,
+     and purge old versions. terraform validate passes.
+  ────────────────────────────────────────
+  Task: B2
+  Result: Access check and cost-tag check are built. All 22 tests pass, and
+    running the tag check twice gives identical output and exit code (same
+    SHA-256).
+  ────────────────────────────────────────
+  Task: Docs
+  Result: DESIGN_NOTES.md names the idempotency key: resource address.
+    TERMINAL_LOG.md, .ai-conversations/ and the README index are written.
+
+  Your remaining steps (keep recording until step 2)
+
+  1. Export this chat: type /export in Claude Code and save it as
+     f:\Ajackus_Assignment\haven-infra-assessment\.ai-conversations\full-session
+     -export.txt. The AI record already says this file exists, so it has to be
+     there.
+  2. Stop the OBS recording. The file will be in F:\Recordings.
+  3. Upload it to Google Drive ("Anyone with the link can view") or YouTube as
+     Unlisted, and open the link in a private window to check it plays for
+     people who aren't logged in.
+  4. Send me the link and I'll put it in README.md in place of
+     RECORDING_LINK_PLACEHOLDER, then commit and push it together with the
+     export.
+  5. Reply to the Tacnique email with the repo URL and the recording link.
+
+  On the "AI error caught" requirement: I found that tautological test assertion
+  myself while reviewing my own output, and the record says exactly that. If
+  you'd like a mistake you caught personally in there too, review the B2 code.
+  If you spot anything, tell me and we'll add it honestly.
