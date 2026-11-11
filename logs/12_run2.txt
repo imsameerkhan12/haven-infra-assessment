@@ -1,0 +1,4 @@
+FAIL: 2 of 4 resource(s) being created/updated are missing required tag 'landlord_account_id':
+  - aws_lambda_function.mls_feed_sync
+  - aws_s3_bucket.listing_media
+exit code: 1

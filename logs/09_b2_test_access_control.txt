@@ -1,0 +1,18 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.2.0, pluggy-1.7.0 -- F:\Ajackus_Assignment\haven-infra-assessment\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: F:\Ajackus_Assignment\haven-infra-assessment
+collecting ... collected 10 items
+
+tests/test_access_control.py::test_pm_001_denied_cross_account_report PASSED [ 10%]
+tests/test_access_control.py::test_pm_001_allowed_own_account_report PASSED [ 20%]
+tests/test_access_control.py::test_access_matrix_is_symmetric[pm-001-rep-001-True] PASSED [ 30%]
+tests/test_access_control.py::test_access_matrix_is_symmetric[pm-001-rep-002-False] PASSED [ 40%]
+tests/test_access_control.py::test_access_matrix_is_symmetric[pm-002-rep-002-True] PASSED [ 50%]
+tests/test_access_control.py::test_access_matrix_is_symmetric[pm-002-rep-001-False] PASSED [ 60%]
+tests/test_access_control.py::test_fails_closed_when_tenant_missing PASSED [ 70%]
+tests/test_access_control.py::test_fails_closed_when_property_missing PASSED [ 80%]
+tests/test_access_control.py::test_fails_closed_when_tenant_id_is_ambiguous PASSED [ 90%]
+tests/test_access_control.py::test_fails_closed_when_property_has_no_landlord_account PASSED [100%]
+
+============================= 10 passed in 0.11s ==============================

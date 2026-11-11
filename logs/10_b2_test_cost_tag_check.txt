@@ -1,0 +1,20 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.2.0, pluggy-1.7.0 -- F:\Ajackus_Assignment\haven-infra-assessment\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: F:\Ajackus_Assignment\haven-infra-assessment
+collecting ... collected 12 items
+
+tests/test_cost_tag_check.py::test_fixture_flags_exactly_the_untagged_resources PASSED [  8%]
+tests/test_cost_tag_check.py::test_fixture_passes_resources_that_carry_landlord_account_id PASSED [ 16%]
+tests/test_cost_tag_check.py::test_tenant_id_tag_is_not_a_substitute_for_landlord_account_id PASSED [ 25%]
+tests/test_cost_tag_check.py::test_fixture_noop_and_delete_entries_are_ignored_without_crashing PASSED [ 33%]
+tests/test_cost_tag_check.py::test_running_twice_gives_identical_output_and_exit_code PASSED [ 41%]
+tests/test_cost_tag_check.py::test_duplicate_address_in_one_plan_is_reported_once PASSED [ 50%]
+tests/test_cost_tag_check.py::test_output_is_independent_of_input_order PASSED [ 58%]
+tests/test_cost_tag_check.py::test_all_tagged_plan_passes PASSED         [ 66%]
+tests/test_cost_tag_check.py::test_replace_action_is_checked PASSED      [ 75%]
+tests/test_cost_tag_check.py::test_blank_or_null_tag_value_counts_as_missing PASSED [ 83%]
+tests/test_cost_tag_check.py::test_tag_inherited_via_default_tags_in_tags_all_passes PASSED [ 91%]
+tests/test_cost_tag_check.py::test_unreadable_plan_fails_closed PASSED   [100%]
+
+============================= 12 passed in 0.24s ==============================

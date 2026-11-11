@@ -1,0 +1,7 @@
+
+>           assert address not in out
+E           AssertionError: assert 'aws_s3_buck...rchive_media' not in 'FAIL: 3 of ...ting_media\n'
+tests\test_cost_tag_check.py:67: AssertionError
+FAILED tests/test_cost_tag_check.py::test_fixture_noop_and_delete_entries_are_ignored_without_crashing
+1 failed, 11 deselected in 0.17s
+
