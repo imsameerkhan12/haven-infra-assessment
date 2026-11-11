@@ -42,7 +42,7 @@ for how to use it.
 
 ## Submission — Sameer Khan
 
-**Screen recording (continuous, unedited, narrated):** RECORDING_LINK_PLACEHOLDER
+**Screen recording (continuous, unedited, narrated):** [Google Drive — screen recording](https://drive.google.com/drive/folders/1e4WX3aAOob0nOtnqxnIyzjT8Tc7LKJcP?usp=sharing)
 
 | Deliverable | Where |
 |---|---|
